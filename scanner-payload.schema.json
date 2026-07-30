@@ -1,0 +1,540 @@
+
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "",
+  "title": "Scanner Output Payload",
+  "type": "object",
+  "description": "Complete scanner payload schema including agents, tools, bindings, and systems",
+
+  "required": [
+    "schema_version",
+    "repo",
+    "scan",
+    "detected"
+  ],
+
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "description": "Semantic version indicating the scanner output schema version"
+    },
+
+    "repo": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["provider", "org", "repo_name", "repo_url", "default_branch"],
+      "properties": {
+        "provider": { "type": "string" },
+        "org": { "type": "string" },
+        "repo_name": { "type": "string" },
+        "repo_url": { "type": "string", "format": "uri" },
+        "default_branch": { "type": "string" }
+      }
+    },
+
+    "scan": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["scanned_branch", "scan_id", "scan_timestamp", "current_commit_hash"],
+      "properties": {
+        "scanned_branch": { "type": "string" },
+        "scan_id": { "type": "string", "format": "uuid" },
+        "scan_timestamp": { "type": "string" },
+        "current_commit_hash": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{40}$"
+        },
+        "scanner_version": { "type": "string", "description": "Semantic version of scanner" }
+      }
+    },
+
+    "detected": {
+      "type": "object",
+      "description": "Container for all scanner-detected entities",
+      "additionalProperties": true,
+
+      "properties": {
+        "owner": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "detected": { "type": "boolean" },
+            "name": { "type": ["string", "null"] },
+            "email": { "type": ["string", "null"], "format": "email" }
+          },
+          "required": ["detected"]
+        },
+
+        "signals": {
+          "type": "object",
+          "description": "Raw detection signals (AI usage, pattern matching, etc.)",
+          "additionalProperties": true,
+          "properties": {
+            "agentic": { "type": "boolean" },
+            "matched_stage": { "type": "integer" },
+            "matched_paths": {
+              "type": "array",
+              "items": { "type": "string" }
+            }
+          }
+        },
+
+        "dependencies": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "dependency_files": {
+              "type": "array",
+              "items": { "type": "string" }
+            },
+            "ai_dependencies": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "package_name": { "type": "string" },
+                  "version": { "type": "string" },
+                  "source_file": { "type": "string" }
+                },
+                "required": ["package_name", "version"]
+              }
+            }
+          }
+        },
+
+        "agents": {
+          "type": "object",
+          "description": "All candidate agent detections with full agent record details",
+          "additionalProperties": false,
+          "properties": {
+            "counts": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": { "count": { "type": "number" } },
+                "required": ["count"]
+              }
+            },
+            "counts_unique": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": { "count": { "type": "number" } },
+                "required": ["count"]
+              },
+              "description": "Optional deduplicated agent count grouped by normalised name"
+            },
+            "instances": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": true,
+                "properties": {
+                  "file": { "type": "string" },
+                  "count": { "type": "number" },
+                  "agents": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "additionalProperties": true,
+                      "properties": {
+                        "line": { "type": "number" },
+                        "name": { "type": "string" },
+                        "type": { "type": "string", "description": "Agent type, e.g. chat_agent, orchestrator" },
+                        "description": { "type": "string" },
+                        "detection_type": { "type": "string" },
+                        "agent_scan_id": { "type": "string", "format": "uuid" },
+                        "agent_url": { "type": "string", "format": "uri" },
+                        "language": { "type": "string", "description": "Programming language for this agent, e.g. Python, TypeScript, Go" },
+                        "languages": {
+                          "type": "array",
+                          "items": { "type": "string" },
+                          "description": "Programming languages for this agent"
+                        },
+                        "internal_external": { "type": "string", "description": "internal or external" },
+                        "user_type": { "type": "string" },
+                        "supported_channels": {
+                          "type": "array",
+                          "items": { "type": "string" },
+                          "description": "e.g. Teams, Web"
+                        },
+                        "governance": {
+                          "type": "object",
+                          "additionalProperties": false,
+                          "properties": {
+                            "lifecycle_status": { "type": "string", "description": "e.g. DEV, TEST, PROD, DEPRECATED" },
+                            "deprecated": { "type": "boolean" },
+                            "deprecated_reason": { "type": "string" },
+                            "max_data_classification": { "type": "string" },
+                            "owner": {
+                              "type": "object",
+                              "properties": {
+                                "name": { "type": "string" },
+                                "email": { "type": "string", "format": "email" }
+                              }
+                            }
+                          }
+                        },
+                        "exceptions": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "type": { "type": "string" },
+                              "severity": { "type": "string", "description": "low, medium, high, critical" },
+                              "notes": { "type": "string" }
+                            },
+                            "required": ["type", "severity"]
+                          }
+                        }
+                      },
+                      "required": ["line", "name", "detection_type", "agent_scan_id"]
+                    }
+                  }
+                },
+                "required": ["file", "count", "agents"]
+              }
+            },
+
+            "unique": {
+              "type": "array",
+              "description": "Deduplicated view: identical structure to instances but with duplicate agents removed (one canonical per unique agent name, with other detections as usages)",
+              "items": {
+                "type": "object",
+                "additionalProperties": true,
+                "properties": {
+                  "file": { "type": "string" },
+                  "count": { "type": "number" },
+                  "agents": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "additionalProperties": true,
+                      "properties": {
+                        "line": { "type": "number" },
+                        "name": { "type": "string" },
+                        "type": { "type": "string", "description": "Agent type, e.g. chat_agent, orchestrator" },
+                        "description": { "type": "string" },
+                        "detection_type": { "type": "string" },
+                        "agent_scan_id": { "type": "string", "format": "uuid" },
+                        "agent_url": { "type": "string", "format": "uri" },
+                        "language": { "type": "string", "description": "Programming language for this agent, e.g. Python, TypeScript, Go" },
+                        "languages": {
+                          "type": "array",
+                          "items": { "type": "string" },
+                          "description": "Programming languages for this agent"
+                        },
+                        "internal_external": { "type": "string", "description": "internal or external" },
+                        "user_type": { "type": "string" },
+                        "supported_channels": {
+                          "type": "array",
+                          "items": { "type": "string" },
+                          "description": "e.g. Teams, Web"
+                        },
+                        "governance": {
+                          "type": "object",
+                          "additionalProperties": false,
+                          "properties": {
+                            "lifecycle_status": { "type": "string", "description": "e.g. DEV, TEST, PROD, DEPRECATED" },
+                            "deprecated": { "type": "boolean" },
+                            "deprecated_reason": { "type": "string" },
+                            "max_data_classification": { "type": "string" },
+                            "owner": {
+                              "type": "object",
+                              "properties": {
+                                "name": { "type": "string" },
+                                "email": { "type": "string", "format": "email" }
+                              }
+                            }
+                          }
+                        },
+                        "exceptions": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "type": { "type": "string" },
+                              "severity": { "type": "string", "description": "low, medium, high, critical" },
+                              "notes": { "type": "string" }
+                            },
+                            "required": ["type", "severity"]
+                          }
+                        },
+                        "usages": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "additionalProperties": true,
+                            "properties": {
+                              "line": { "type": "number" },
+                              "detection_type": { "type": "string" },
+                              "agent_scan_id": { "type": "string", "format": "uuid" },
+                              "agent_url": { "type": "string", "format": "uri" },
+                              "language": { "type": "string" },
+                              "file": { "type": "string" },
+                              "type": { "type": "string" },
+                              "description": { "type": "string" },
+                              "internal_external": { "type": "string" },
+                              "user_type": { "type": "string" }
+                            }
+                          },
+                          "description": "Other locations where this same agent is detected (deduplicated out)"
+                        },
+                        "aliases": {
+                          "type": "array",
+                          "items": { "type": "string" },
+                          "description": "Alternative names for this agent detected in the codebase"
+                        }
+                      },
+                      "required": ["line", "name", "detection_type", "agent_scan_id"]
+                    }
+                  },
+                  "imports": {
+                    "type": "array",
+                    "items": { "type": "string" }
+                  }
+                },
+                "required": ["file", "count", "agents"]
+              }
+            },
+
+            "frameworks": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "main_framework": { "type": ["string", "null"] },
+                "supporting_infrastructure": {
+                  "type": "array",
+                  "items": { "type": "string" }
+                },
+                "framework_scores": {
+                  "type": "object",
+                  "additionalProperties": true
+                },
+                "multi_framework": { "type": "boolean" }
+              }
+            },
+
+            "agentic_imports": {
+              "type": "array",
+              "items": { "type": "string" },
+              "description": "AI framework imports detected"
+            },
+
+            "agentic_tools_used": {
+              "type": "array",
+              "items": { "type": "string" },
+              "description": "Tools used by agents"
+            },
+
+            "integration_points": {
+              "type": "array",
+              "items": { "type": "string" },
+              "description": "Integration endpoints or services"
+            },
+
+            "runtime": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "gateways": {
+                  "type": "array",
+                  "items": { "type": "string" },
+                  "description": "Gateway types, e.g. ingressgateway"
+                },
+                "endpoints": {
+                  "type": "array",
+                  "items": { "type": "string", "format": "uri" }
+                },
+                "is_envoy_based": { "type": "boolean" }
+              }
+            },
+
+            "languages": {
+              "type": "array",
+              "items": { "type": "string" },
+              "description": "Programming languages detected"
+            },
+
+            "sdk_name": { "type": "string", "description": "Primary SDK name" },
+            "sdk_version": { "type": "string", "description": "Primary SDK version" }
+          }
+        },
+
+        "tools": {
+          "type": "array",
+          "description": "Tools detected in the repository with full tool record details",
+          "items": {
+            "type": "object",
+            "additionalProperties": true,
+            "properties": {
+              "tool_id": { "type": ["string", "null"] },
+              "name": { "type": "string" },
+              "type": { "type": "string", "description": "e.g. api_tool, webhook_tool" },
+              "description": { "type": "string" },
+              "location": { "type": "string", "description": "e.g. repo_ref=AI/tooling; path=tools/search" },
+              "detected_at": { "type": "string" },
+              "provider": { "type": "string" },
+              "specification": {
+                "type": "object",
+                "properties": {
+                  "version": { "type": "string" },
+                  "parameters_schema": { "type": "object" },
+                  "return_schema": { "type": "object" },
+                  "authentication": { "type": "string" },
+                  "rate_limit": { "type": "string" },
+                  "compliance_tags": {
+                    "type": "array",
+                    "items": { "type": "string" }
+                  },
+                  "dependencies": {
+                    "type": "array",
+                    "items": { "type": "string" }
+                  }
+                }
+              },
+              "runtime": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "gateways": {
+                      "type": "array",
+                      "items": { "type": "string" }
+                    },
+                    "endpoints": {
+                      "type": "array",
+                      "items": { "type": "string", "format": "uri" }
+                    }
+                  }
+                }
+              },
+              "governance": {
+                "type": "object",
+                "properties": {
+                  "lifecycle_status": { "type": "string" },
+                  "deprecated": { "type": "boolean" },
+                  "max_data_classification": { "type": "string" },
+                  "owner": {
+                    "type": "object",
+                    "properties": {
+                      "name": { "type": "string" },
+                      "email": { "type": "string", "format": "email" }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+
+        "bindings": {
+          "type": "object",
+          "description": "Bindings between agents, tools, and systems",
+          "additionalProperties": true,
+          "properties": {
+            "agent_tool": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": true,
+                "properties": {
+                  "binding_id": { "type": "string", "format": "uuid" },
+                  "agent_id": { "type": ["string", "null"] },
+                  "tool_id": { "type": ["string", "null"] },
+                  "binding_type": { "type": "string", "description": "e.g. invokes, reads, writes" },
+                  "binding_state": { "type": "string", "description": "e.g. observed, approved, restricted, blocked" },
+                  "source_file": { "type": "string" },
+                  "line": { "type": "integer" },
+                  "discovered_utc": { "type": "string" },
+                  "tool_version_observed": { "type": "string" },
+                  "permissions_scopes": {
+                    "type": "array",
+                    "items": { "type": "string" }
+                  },
+                  "max_data_classification_allowed": { "type": "string" },
+                  "evidence": {
+                    "type": "array",
+                    "items": { "type": "object", "additionalProperties": true },
+                    "description": "Free-form pointers to code or config where the binding was detected"
+                  }
+                },
+                "required": ["agent_id", "tool_id", "binding_type"]
+              }
+            },
+            "agent_agent": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": true,
+                "properties": {
+                  "binding_id": { "type": "string", "format": "uuid" },
+                  "source_agent": { "type": "string" },
+                  "target_agent": { "type": "string" },
+                  "relationship_type": { "type": "string", "description": "e.g. orchestrates, delegates, calls" },
+                  "binding_state": { "type": "string", "description": "e.g. observed, approved" },
+                  "source_file": { "type": "string" },
+                  "discovered_utc": { "type": "string" },
+                  "system_id": { "type": "string", "description": "If part of a multi-agent system" },
+                  "max_data_classification_allowed": { "type": "string" }
+                },
+                "required": ["source_agent", "target_agent", "relationship_type"]
+              }
+            }
+          }
+        },
+
+        "systems": {
+          "type": "object",
+          "description": "Multi-agent systems and their memberships",
+          "additionalProperties": true,
+          "properties": {
+            "detected_systems": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": true,
+                "properties": {
+                  "system_id": { "type": "string", "description": "System identifier" },
+                  "name": { "type": "string" },
+                  "description": { "type": "string" },
+                  "path": { "type": "string" },
+                  "discovered_utc": { "type": "string" },
+                  "max_data_classification": { "type": "string" }
+                },
+                "required": ["name"]
+              }
+            },
+            "system_memberships": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": true,
+                "properties": {
+                  "membership_id": { "type": "string", "format": "uuid" },
+                  "system_id": { "type": "string" },
+                  "system_name": { "type": "string" },
+                  "agent_id": { "type": "string", "description": "Agent identifier" },
+                  "agent_name": { "type": "string" },
+                  "role": { "type": "string", "description": "e.g. orchestrator, specialist" },
+                  "membership_state": { "type": "string", "description": "e.g. active, inactive" },
+                  "discovered_utc": { "type": "string" },
+                  "responsibility": { "type": "string" }
+                },
+                "required": ["system_name", "agent_name", "role"]
+              }
+            }
+          }
+        },
+
+        "parse_errors": {
+          "type": "object",
+          "additionalProperties": true
+        }
+      }
+    }
+  },
+
+  "additionalProperties": false
+}

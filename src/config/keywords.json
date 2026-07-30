@@ -1,0 +1,882 @@
+{
+  "content_keywords": [
+    "openai",
+    "anthropic",
+    "cohere",
+    "mistralai",
+    "google-genai",
+    "google.generativeai",
+    "google_generativeai",
+    "google.adk",
+    "azure.openai",
+    "semantic_kernel",
+    "vertexai",
+    "langchain",
+    "langgraph",
+    "crewai",
+    "haystack",
+    "llama_index",
+    "llamaindex",
+    "transformers",
+    "vllm",
+    "litellm",
+    "langfuse",
+    "qdrant-client",
+    "chromadb",
+    "pinecone",
+    "pymilvus",
+    "opensearch-py",
+    "elasticsearch",
+    "weaviate",
+    "qdrant",
+    "OPENAI_API_KEY",
+    "ANTHROPIC_API_KEY",
+    "COHERE_API_KEY",
+    "AZURE_OPENAI_KEY",
+    "GEMINI_API_KEY",
+    "VERTEXAI_PROJECT",
+    "LLM_ENDPOINT",
+    "AGENT_REGISTRY",
+    "AGENT_ENV",
+    "WATSONX_APIKEY",
+    "metagpt",
+    "smolagent",
+    "qwen",
+    "agentverse",
+    "letta",
+    "superagi",
+    "kani",
+    "opendevin",
+    "open-devin",
+    "devin",
+    "taskweaver",
+    "phidata",
+    "agentflow",
+    "phiagent",
+    "llama",
+    "genai",
+    "agentic",
+    "mcp"
+  ],
+  "content_whole_words": [
+    "llm",
+    "agent",
+    "prompt",
+    "prompts",
+    "rag",
+    "corpus",
+    "graph",
+    "graphs",
+    "agentic",
+    "ai",
+    "genai",
+    "mcp"
+  ],
+  "path_whole_words": [
+    "agent",
+    "prompt",
+    "prompts",
+    "rag",
+    "corpus",
+    "graph",
+    "graphs",
+    "agentic",
+    "mcp"
+  ],
+  "ignore_extensions": [
+    ".png",
+    ".jpg",
+    ".jpeg",
+    ".gif",
+    ".pdf",
+    ".zip",
+    ".exe",
+    ".dll"
+  ],
+  "dependency_keywords": [
+    "openai",
+    "openai-agents",
+    "anthropic",
+    "@anthropic-ai/",
+    "cohere",
+    "ai21",
+    "mistral",
+    "mistralai",
+    "groq",
+    "google-genai",
+    "google.generativeai",
+    "vertexai",
+    "google-cloud-aiplatform",
+    "amazon-bedrock",
+    "bedrock",
+    "azure-openai",
+    "azure-ai",
+    "langgraph",
+    "@langchain/langgraph",
+    "langchain",
+    "langchain-community",
+    "langchain-openai",
+    "langchain-google-vertexai",
+    "langchain-google-community",
+    "langchain-text-splitters",
+    "@langchain/",
+    "deepagents",
+    "crewai",
+    "autogen",
+    "autogen-core",
+    "autogen-agentchat",
+    "openai-swarm",
+    "semantic_kernel",
+    "semantic-kernel",
+    "agent-framework",
+    "microsoft-agents",
+    "google-adk",
+    "ibm-watsonx",
+    "ibm-watsonx-orchestrate",
+    "ibm_watsonx_orchestrate",
+    "llamaindex",
+    "llama_index",
+    "llama-index",
+    "smolagents",
+    "pydantic_ai",
+    "pydantic-ai",
+    "phidata",
+    "phi.agent",
+    "langroid",
+    "dspy",
+    "haystack",
+    "griptape",
+    "superagi",
+    "metagpt",
+    "llama-cpp-python",
+    "litellm",
+    "langsmith",
+    "opentelemetry",
+    "opentelemetry-instrumentation-langchain",
+    "opentelemetry-exporter-otlp",
+    "opentelemetry-exporter-gcp-trace",
+    "opentelemetry-resourcedetector-gcp",
+    "opentelemetry-proto",
+    "arize-phoenix",
+    "mlflow",
+    "a2a-sdk",
+    "genai",
+    "vertexai"
+  ],
+
+  "agent_instantiation_patterns": [
+    "ChatOpenAI",
+    "ChatAnthropic",
+    "ChatCohere",
+    "AzureChatOpenAI",
+    "ConversableAgent",
+    "AssistantAgent",
+    "UserProxyAgent",
+    "GroupChatManager",
+    "Task",
+    "Crew",
+    "initialize_agent",
+    "initialise_agent",
+    "create_react_agent",
+    "create_openai_functions_agent",
+    "create_structured_chat_agent",
+    "create_tool_calling_agent",
+    "Agent",
+    "ReActAgent",
+    "ToolAgent",
+    "OpenAIAgent",
+    "LlamaIndexAgent",
+    "QueryEngine",
+    "AgentExecutor",
+    "AgentRunner",
+    "LLMCompiler",
+    "PlanAndExecute",
+    "GroupChat",
+    "Swarm",
+    "Sequential",
+    "Hierarchical",
+    "Orchestra",
+    "Orchestrator",
+    "AgentBuilder",
+    "create_agent",
+    "build_agent",
+    "make_agent",
+    "agent_factory",
+    "construct_agent",
+    "instantiate_agent",
+    "spawn_agent",
+    "generate_agent",
+    "compose_agent",
+    "assemble_agent",
+    "configure_agent",
+    "init_agent",
+    "setup_agent",
+    "prepare_agent",
+    "deploy_agent",
+    "register_agent",
+    "provision_agent",
+    "activate_agent",
+    "synthesize_agent",
+    "synthesise_agent",
+    "forge_agent",
+    "mold_agent",
+    "engineer_agent",
+    "craft_agent",
+    "SimpleAgent",
+    "StructuredPlannerAgent",
+    "Kernel",
+    "Planner",
+    "Assistant",
+    "Researcher",
+    "Analyzer",
+    "Analyser",
+    "Coordinator",
+    "Executor",
+    "Validator",
+    "Supervisor",
+    "Manager",
+    "Dispatcher",
+    "Worker",
+    "Handler",
+    "Processor",
+    "Transformer",
+    "Adapter",
+    "Translator",
+    "Encoder",
+    "Decoder",
+    "Controller",
+    "Moderator",
+    "Mediator",
+    "Router",
+    "Navigator",
+    "Monitor",
+    "ServiceMesh",
+    "DAGExecutor",
+    "BatchProcessor",
+    "AgentFactory",
+    "call_claude",
+    "Together",
+    "Groq",
+    "Ollama",
+    "Replicate",
+    "CohereClient",
+    "MistralClient",
+    "create_pandas_dataframe_agent"
+  ],
+  
+  "agent_base_classes": [
+    "BaseAgent",
+    "ConversableAgent",
+    "ChatModel",
+    "BaseChatModel",
+    "Agent",
+    "LLMChain",
+    "BaseCallbackHandler",
+    "GroupChat",
+    "Swarm",
+    "Kernel",
+    "Planner",
+    "Orchestrator"
+  ],
+  
+  "framework_modules": [
+    "google.adk",
+    "google.adk.agents",
+    "google.adk.orchestration",
+    "langgraph",
+    "langchain",
+    "langchain.agents",
+    "langchain.chat_models",
+    "langchain.llms",
+    "langchain.experimental.agents",
+    "langchain.chains",
+    "crewai",
+    "autogen",
+    "autogen.agentchat",
+    "autogen_core",
+    "ag2",
+    "anthropic",
+    "llama_index",
+    "llamaindex",
+    "llama_index.agent",
+    "llama_index.core",
+    "openai",
+    "openai.agents",
+    "openai.swarm",
+    "openai_swarm",
+    "swarm",
+    "cohere",
+    "mistralai",
+    "groq",
+    "ollama",
+    "together",
+    "replicate",
+    "semantic_kernel",
+    "semantic_kernel.agents",
+    "semantic_kernel.planners",
+    "haystack",
+    "haystack.agents",
+    "griptape",
+    "griptape.agents",
+    "smolagents",
+    "transformers.agents",
+    "pydantic_ai",
+    "phidata",
+    "phi.agent",
+    "langroid",
+    "dspy",
+    "superagi",
+    "metagpt",
+    "ibm_watsonx_orchestrate",
+    "ibm.watsonx.orchestrate",
+    "watsonx.orchestrate",
+    "microsoft.agents",
+    "azure.ai.agent",
+    "azure.ai.agents"
+  ],
+  
+  "strong_agentic_methods": [
+    "think",
+    "autonomous_loop"
+  ],
+  
+  "weak_agentic_methods": [
+    "run",
+    "execute",
+    "invoke",
+    "stream",
+    "call",
+    "step",
+    "act",
+    "iterate",
+    "plan",
+    "reflect"
+  ],
+  
+  "skip_methods": [
+    "get",
+    "set",
+    "validate",
+    "to_dict",
+    "from_dict",
+    "dict",
+    "json"
+  ],
+  
+  "llm_parameter_names": [
+    "llm",
+    "model",
+    "language_model",
+    "chat_model"
+  ],
+  
+  "agent_parameter_names": [
+    "agents",
+    "agent",
+    "workers",
+    "team",
+    "members",
+    "nodes"
+  ],
+  
+  "tools_parameter_names": [
+    "tools",
+    "functions",
+    "actions"
+  ],
+  
+  "prompt_phrase_patterns": {
+    "phrase_patterns": [
+      "you are an",
+      "you are a",
+      "you are the",
+      "your role is",
+      "your task is",
+      "you are an expert",
+      "act as",
+      "act as a",
+      "assume the role",
+      "you will act",
+      "you will behave",
+      "behave as",
+      "think of yourself",
+      "pretend you are",
+      "specializes in",
+      "specialized in",
+      "specialises in",
+      "specialised in",
+      "expertise in"
+    ],
+    "strong_indicators": [
+      "system_prompt",
+      "system prompt",
+      "agent prompt",
+      "agent_prompt"
+    ],
+    "context_fields": [
+      "system_prompt",
+      "instruction",
+      "instructions",
+      "prompt",
+      "backstory",
+      "role",
+      "expertise",
+      "description"
+    ],
+    "phrase_scoring_weight": 3
+  },
+  
+  "llm_call_patterns": [
+    "invoke",
+    "run",
+    "call",
+    "generate",
+    "complete",
+    "chat",
+    "predict",
+    "forward"
+  ],
+  
+  "llm_provider_methods": [
+    "agent",
+    "create",
+    "chat",
+    "messages"
+  ],
+  
+  "llm_provider_modules": [
+    "anthropic",
+    "openai",
+    "cohere",
+    "mistralai",
+    "groq",
+    "ollama",
+    "together",
+    "replicate"
+  ],
+  
+  "generic_role_names": [
+    "Assistant",
+    "Researcher",
+    "Analyser",
+    "Coordinator",
+    "Orchestrator",
+    "Planner",
+    "Executor",
+    "Validator",
+    "Supervisor",
+    "Manager",
+    "Dispatcher",
+    "Worker",
+    "Handler",
+    "Processor",
+    "Transformer",
+    "Adapter",
+    "Translator",
+    "Encoder",
+    "Decoder",
+    "Controller",
+    "Moderator",
+    "Mediator",
+    "Router",
+    "Navigator",
+    "Monitor"
+  ],
+  
+  "setup_method_names": [
+    "__init__",
+    "setup",
+    "configure",
+    "initialize",
+    "initialise"
+  ],
+  
+  "framework_detection": {
+    "frameworks": [
+      {
+        "canonical_name": "Google ADK",
+        "import_patterns": [
+          "google.adk",
+          "google.adk.agents",
+          "google.adk.orchestration",
+          "google.adk.tools",
+          "a2a_sdk"
+        ],
+        "dependency_patterns": [
+          "google-adk",
+          "a2a-sdk"
+        ]
+      },
+      {
+        "canonical_name": "LangGraph",
+        "import_patterns": [
+          "langgraph",
+          "@langchain/langgraph"
+        ],
+        "dependency_patterns": [
+          "langgraph",
+          "@langchain/langgraph"
+        ]
+      },
+      {
+        "canonical_name": "LangChain",
+        "import_patterns": [
+          "langchain",
+          "langchain.agents",
+          "langchain.chat_models",
+          "langchain.llms",
+          "langchain.chains",
+          "langchain.experimental",
+          "langchain_community",
+          "langchain_openai",
+          "langchain_anthropic",
+          "langchain_google_vertexai",
+          "langchain_google_community",
+          "langchain_text_splitters",
+          "@langchain/core",
+          "@langchain/community",
+          "@langchain/openai"
+        ],
+        "dependency_patterns": [
+          "langchain",
+          "langchain-community",
+          "langchain-openai",
+          "langchain-anthropic",
+          "langchain-google-vertexai",
+          "langchain-google-community",
+          "langchain-text-splitters",
+          "@langchain/"
+        ]
+      },
+      {
+        "canonical_name": "Microsoft Semantic Kernel",
+        "import_patterns": [
+          "semantic_kernel",
+          "semantic_kernel.agents",
+          "semantic_kernel.planners",
+          "semantic_kernel.orchestration"
+        ],
+        "dependency_patterns": [
+          "semantic-kernel",
+          "semantic_kernel"
+        ]
+      },
+      {
+        "canonical_name": "LlamaIndex",
+        "import_patterns": [
+          "llama_index",
+          "llamaindex",
+          "llama_index.agent",
+          "llama_index.core",
+          "llama_index.llms",
+          "llama-index"
+        ],
+        "dependency_patterns": [
+          "llama-index",
+          "llama_index",
+          "llamaindex",
+          "llama-index-core",
+          "llama-index-llms-openai"
+        ]
+      },
+      {
+        "canonical_name": "CrewAI",
+        "import_patterns": [
+          "crewai",
+          "crewai.agent",
+          "crewai.task",
+          "crewai.crew"
+        ],
+        "dependency_patterns": [
+          "crewai"
+        ]
+      },
+      {
+        "canonical_name": "OpenAI Python SDK",
+        "import_patterns": [
+          "openai",
+          "openai.types.beta",
+          "openai.resources.beta.assistants"
+        ],
+        "dependency_patterns": [
+          "openai"
+        ]
+      },
+      {
+        "canonical_name": "OpenAI Agents SDK",
+        "import_patterns": [
+          "openai.agents",
+          "openai_agents"
+        ],
+        "dependency_patterns": [
+          "openai-agents"
+        ]
+      },
+      {
+        "canonical_name": "OpenAI Swarm",
+        "import_patterns": [
+          "swarm",
+          "openai.swarm",
+          "openai_swarm"
+        ],
+        "dependency_patterns": [
+          "openai-swarm",
+          "swarm"
+        ]
+      },
+      {
+        "canonical_name": "AutoGen",
+        "import_patterns": [
+          "autogen",
+          "autogen.agentchat",
+          "autogen.agent",
+          "autogen_core",
+          "autogen_agentchat",
+          "ag2"
+        ],
+        "dependency_patterns": [
+          "autogen",
+          "pyautogen",
+          "autogen-core",
+          "autogen-agentchat",
+          "ag2"
+        ]
+      },
+      {
+        "canonical_name": "Haystack",
+        "import_patterns": [
+          "haystack",
+          "haystack.agents",
+          "haystack.components"
+        ],
+        "dependency_patterns": [
+          "haystack-ai",
+          "farm-haystack"
+        ]
+      },
+      {
+        "canonical_name": "Griptape",
+        "import_patterns": [
+          "griptape",
+          "griptape.agents",
+          "griptape.structures"
+        ],
+        "dependency_patterns": [
+          "griptape"
+        ]
+      },
+      {
+        "canonical_name": "Hugging Face smolagents",
+        "import_patterns": [
+          "smolagents",
+          "transformers.agents"
+        ],
+        "dependency_patterns": [
+          "smolagents"
+        ]
+      },
+      {
+        "canonical_name": "PydanticAI",
+        "import_patterns": [
+          "pydantic_ai",
+          "pydantic_ai.agent"
+        ],
+        "dependency_patterns": [
+          "pydantic-ai",
+          "pydantic_ai"
+        ]
+      },
+      {
+        "canonical_name": "PhiData",
+        "import_patterns": [
+          "phidata",
+          "phi.agent",
+          "phi.assistant"
+        ],
+        "dependency_patterns": [
+          "phidata"
+        ]
+      },
+      {
+        "canonical_name": "Langroid",
+        "import_patterns": [
+          "langroid",
+          "langroid.agent"
+        ],
+        "dependency_patterns": [
+          "langroid"
+        ]
+      },
+      {
+        "canonical_name": "DSPy",
+        "import_patterns": [
+          "dspy",
+          "dspy.agents"
+        ],
+        "dependency_patterns": [
+          "dspy-ai",
+          "dspy"
+        ]
+      },
+      {
+        "canonical_name": "SuperAGI",
+        "import_patterns": [
+          "superagi",
+          "superagi.agent"
+        ],
+        "dependency_patterns": [
+          "superagi"
+        ]
+      },
+      {
+        "canonical_name": "MetaGPT",
+        "import_patterns": [
+          "metagpt",
+          "metagpt.roles",
+          "metagpt.agents"
+        ],
+        "dependency_patterns": [
+          "metagpt"
+        ]
+      },
+      {
+        "canonical_name": "IBM watsonx Orchestrate",
+        "import_patterns": [
+          "ibm_watsonx_orchestrate",
+          "ibm.watsonx.orchestrate",
+          "watsonx.orchestrate",
+          "ibm_watsonx_ai"
+        ],
+        "dependency_patterns": [
+          "ibm-watsonx-orchestrate",
+          "ibm_watsonx_orchestrate",
+          "ibm-watsonx-ai"
+        ]
+      },
+      {
+        "canonical_name": "Microsoft Agent Framework",
+        "import_patterns": [
+          "microsoft.agents",
+          "azure.ai.agent",
+          "azure.ai.agents"
+        ],
+        "dependency_patterns": [
+          "microsoft-agents",
+          "azure-ai-agent"
+        ]
+      }
+    ],
+    "infrastructure": [
+      {
+        "name": "OpenTelemetry",
+        "patterns": [
+          "opentelemetry",
+          "opentelemetry-instrumentation-langchain",
+          "opentelemetry-exporter-otlp",
+          "opentelemetry-exporter-gcp-trace",
+          "opentelemetry-resourcedetector-gcp",
+          "opentelemetry-proto"
+        ],
+        "category": "observability"
+      },
+      {
+        "name": "LangFuse",
+        "patterns": [
+          "langfuse"
+        ],
+        "category": "observability"
+      },
+      {
+        "name": "Arize Phoenix",
+        "patterns": [
+          "arize-phoenix",
+          "arize_phoenix"
+        ],
+        "category": "observability"
+      },
+      {
+        "name": "LangSmith",
+        "patterns": [
+          "langsmith"
+        ],
+        "category": "observability"
+      },
+      {
+        "name": "MLflow",
+        "patterns": [
+          "mlflow"
+        ],
+        "category": "observability"
+      },
+      {
+        "name": "LiteLLM",
+        "patterns": [
+          "litellm"
+        ],
+        "category": "llm_gateway"
+      },
+      {
+        "name": "Qdrant",
+        "patterns": [
+          "qdrant-client",
+          "qdrant"
+        ],
+        "category": "vector_db"
+      },
+      {
+        "name": "ChromaDB",
+        "patterns": [
+          "chromadb",
+          "chroma"
+        ],
+        "category": "vector_db"
+      },
+      {
+        "name": "Pinecone",
+        "patterns": [
+          "pinecone-client",
+          "pinecone"
+        ],
+        "category": "vector_db"
+      },
+      {
+        "name": "Milvus",
+        "patterns": [
+          "pymilvus",
+          "milvus"
+        ],
+        "category": "vector_db"
+      },
+      {
+        "name": "Weaviate",
+        "patterns": [
+          "weaviate-client",
+          "weaviate"
+        ],
+        "category": "vector_db"
+      },
+      {
+        "name": "Elasticsearch",
+        "patterns": [
+          "elasticsearch"
+        ],
+        "category": "vector_db"
+      },
+      {
+        "name": "OpenSearch",
+        "patterns": [
+          "opensearch-py",
+          "opensearch"
+        ],
+        "category": "vector_db"
+      }
+    ]
+  },
+  
+  "settings": {
+    "content_scan_max_chars": 200000,
+    "min_keyword_length_for_whole_word": 2,
+    "max_generic_name_length": 20,
+    "max_agent_name_length": 20
+  }
+}
