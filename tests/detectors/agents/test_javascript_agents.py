@@ -59,6 +59,24 @@ const agent = prebuilt.createReactAgent({ llm, tools });
     assert locations[0]["line"] == 3
 
 
+def test_detects_commonjs_destructuring_alias() -> None:
+    detector = JavaScriptAgentDetector()
+    source = """
+const { createAgent: makeAgent } = require("langchain");
+
+const agent = makeAgent({ model, tools });
+""".strip()
+
+    assert detector.get_agent_locations(source) == [
+        {
+            "line": 3,
+            "name": "createAgent",
+            "detection_type": "javascript_framework_factory",
+        }
+    ]
+    assert detector.get_framework_imports(source) == {"langchain"}
+
+
 def test_does_not_count_import_without_factory_invocation() -> None:
     detector = JavaScriptAgentDetector()
     source = 'import { createAgent } from "langchain";'
@@ -74,6 +92,18 @@ import { createAgent } from "langchain";
 
 // const agent = createAgent({ model, tools });
 const active = true;
+""".strip()
+
+    assert detector.get_agent_locations(source) == []
+
+
+def test_does_not_count_factory_syntax_inside_string_literal() -> None:
+    detector = JavaScriptAgentDetector()
+    source = """
+import { createAgent } from "langchain";
+
+const example = "createAgent({ model, tools })";
+const template = `createAgent({ model, tools })`;
 """.strip()
 
     assert detector.get_agent_locations(source) == []
