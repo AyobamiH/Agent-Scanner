@@ -89,6 +89,22 @@ jobs:
               text = text.replace(old, new, 1)
 
           path.write_text(text, encoding="utf-8")
+
+          js_path = Path("src/detectors/agents/javascript_agents.py")
+          js_text = js_path.read_text(encoding="utf-8")
+          old_sort = '        return sorted(locations, key=lambda item: (int(item["line"]), str(item["name"])))\n'
+          new_sort = (
+              '        return sorted(\n'
+              '            locations,\n'
+              '            key=lambda item: (\n'
+              '                item["line"] if isinstance(item["line"], int) else 0,\n'
+              '                str(item["name"]),\n'
+              '            ),\n'
+              '        )\n'
+          )
+          if js_text.count(old_sort) != 1:
+              raise SystemExit("Expected exactly one typed location sort target")
+          js_path.write_text(js_text.replace(old_sort, new_sort, 1), encoding="utf-8")
           PY
 
       - name: Run focused JS/TS tests
