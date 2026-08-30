@@ -150,6 +150,7 @@
     "metagpt",
     "llama-cpp-python",
     "litellm",
+    "langfuse",
     "langsmith",
     "opentelemetry",
     "opentelemetry-instrumentation-langchain",
