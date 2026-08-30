@@ -92,7 +92,7 @@ jobs:
           PY
 
       - name: Run focused JS/TS tests
-        run: python -m uv run pytest tests/detectors/agents/test_javascript_agents.py -q
+        run: python -m uv run pytest tests/detectors/agents/test_javascript_agents.py -q --no-cov
 
       - name: Run full test suite
         run: python -m uv run pytest
