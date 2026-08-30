@@ -2,8 +2,8 @@
 
 Detects agent construction only when a known factory is imported from a
 trusted LangChain/LangGraph module and then invoked. This avoids counting
-mere imports, comments, or unrelated local functions named like agent
-factories.
+mere imports, comments, string examples, or unrelated local functions named
+like agent factories.
 """
 
 from __future__ import annotations
@@ -31,8 +31,6 @@ class JavaScriptAgentDetector:
         "@langchain/langgraph/prebuilts": frozenset({"createReactAgent"}),
     }
 
-    _FRAMEWORK_PREFIXES: Final[tuple[str, ...]] = ("langchain", "@langchain/")
-
     _ES_NAMED_IMPORT_RE = re.compile(
         r'import\s*\{(?P<names>[^}]+)\}\s*from\s*["\'](?P<module>[^"\']+)["\']',
         re.MULTILINE | re.DOTALL,
@@ -58,13 +56,14 @@ class JavaScriptAgentDetector:
         code = self._strip_comments_preserving_newlines(text)
         named_imports = self._extract_named_imports(code)
         namespace_imports = self._extract_namespace_imports(code)
+        call_code = self._mask_string_literals_preserving_newlines(code)
 
         locations: list[dict[str, object]] = []
         seen: set[tuple[str, int]] = set()
 
         for imported in named_imports:
-            for match in re.finditer(rf"\b{re.escape(imported.local_name)}\s*\(", code):
-                line = self._line_number(code, match.start())
+            for match in re.finditer(rf"\b{re.escape(imported.local_name)}\s*\(", call_code):
+                line = self._line_number(call_code, match.start())
                 key = (imported.canonical_name, line)
                 if key in seen:
                     continue
@@ -80,8 +79,8 @@ class JavaScriptAgentDetector:
         for module, alias in namespace_imports:
             for canonical_name in self._TRUSTED_FACTORIES.get(module, frozenset()):
                 pattern = rf"\b{re.escape(alias)}\s*\.\s*{re.escape(canonical_name)}\s*\("
-                for match in re.finditer(pattern, code):
-                    line = self._line_number(code, match.start())
+                for match in re.finditer(pattern, call_code):
+                    line = self._line_number(call_code, match.start())
                     key = (canonical_name, line)
                     if key in seen:
                         continue
@@ -158,9 +157,15 @@ class JavaScriptAgentDetector:
         if not binding:
             return None
 
-        parts = re.split(r"\s+as\s+", binding, maxsplit=1)
-        canonical_name = parts[0].strip()
-        local_name = parts[1].strip() if len(parts) == 2 else canonical_name
+        as_parts = re.split(r"\s+as\s+", binding, maxsplit=1)
+        if len(as_parts) == 2:
+            canonical_name, local_name = (part.strip() for part in as_parts)
+        elif ":" in binding:
+            canonical_name, local_name = (part.strip() for part in binding.split(":", 1))
+        else:
+            canonical_name = binding
+            local_name = binding
+
         identifier_re = r"^[A-Za-z_$][\w$]*$"
         if not re.match(identifier_re, canonical_name) or not re.match(identifier_re, local_name):
             return None
@@ -169,6 +174,46 @@ class JavaScriptAgentDetector:
     @staticmethod
     def _line_number(text: str, offset: int) -> int:
         return text.count("\n", 0, offset) + 1
+
+    @staticmethod
+    def _mask_string_literals_preserving_newlines(text: str) -> str:
+        """Mask quoted literals so examples inside strings are not treated as calls.
+
+        Template literals are intentionally masked wholesale. That trades a rare
+        false negative for `${...}` expressions for a lower false-positive rate,
+        which is the preferred bias for governance-oriented scanning.
+        """
+        out: list[str] = []
+        i = 0
+        quote = ""
+
+        while i < len(text):
+            char = text[i]
+
+            if not quote:
+                if char in {'"', "'", "`"}:
+                    quote = char
+                    out.append(" ")
+                else:
+                    out.append(char)
+                i += 1
+                continue
+
+            if char == "\\" and i + 1 < len(text):
+                out.append(" ")
+                escaped = text[i + 1]
+                out.append("\n" if escaped == "\n" else " ")
+                i += 2
+                continue
+
+            if char == quote:
+                quote = ""
+                out.append(" ")
+            else:
+                out.append("\n" if char == "\n" else " ")
+            i += 1
+
+        return "".join(out)
 
     @staticmethod
     def _strip_comments_preserving_newlines(text: str) -> str:
