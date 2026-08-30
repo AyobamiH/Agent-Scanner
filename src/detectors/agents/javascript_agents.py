@@ -94,7 +94,13 @@ class JavaScriptAgentDetector:
                         }
                     )
 
-        return sorted(locations, key=lambda item: (int(item["line"]), str(item["name"])))
+        return sorted(
+            locations,
+            key=lambda item: (
+                item["line"] if isinstance(item["line"], int) else 0,
+                str(item["name"]),
+            ),
+        )
 
     def get_framework_imports(self, text: str) -> set[str]:
         """Return LangChain/LangGraph module imports found in JS/TS source."""

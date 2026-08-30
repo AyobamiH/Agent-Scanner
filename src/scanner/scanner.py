@@ -13,6 +13,7 @@ from pathlib import Path
 from typing import Any, cast
 
 from src.detectors.agents.agents import AgentDetector
+from src.detectors.agents.javascript_agents import JavaScriptAgentDetector
 from src.detectors.dependencies import COMMON_FILES, DependencyParser
 from src.detectors.framework_detector import FrameworkDetector
 from src.detectors.language_detector import LanguageDetector
@@ -124,6 +125,7 @@ class Scanner:
         self._file_source = file_source_client or github_client
         self.matcher = pattern_matcher or PatternMatcher.from_file()
         self.agent_detector = AgentDetector()
+        self.javascript_agent_detector = JavaScriptAgentDetector()
         self.framework_detector = FrameworkDetector()
         self.language_detector = LanguageDetector()
         self.correlation_filter = correlation_filter
@@ -278,6 +280,9 @@ class Scanner:
                     except SyntaxError:
                         framework_imports = set()
                     agent_locations = self.agent_detector.get_agent_locations(content)
+                elif path_lower.endswith(JavaScriptAgentDetector.SUPPORTED_EXTENSIONS):
+                    framework_imports = self.javascript_agent_detector.get_framework_imports(content)
+                    agent_locations = self.javascript_agent_detector.get_agent_locations(content)
                 elif path_lower.endswith((".yaml", ".yml", ".json")):
                     agent_locations = self.agent_detector.get_structured_agent_locations(content, path)
                 else:
@@ -690,6 +695,9 @@ class Scanner:
                         except SyntaxError:
                             framework_imports = set()
                         locations = self.agent_detector.get_agent_locations(content)
+                    elif path_lower.endswith(JavaScriptAgentDetector.SUPPORTED_EXTENSIONS):
+                        framework_imports = self.javascript_agent_detector.get_framework_imports(content)
+                        locations = self.javascript_agent_detector.get_agent_locations(content)
                     elif path_lower.endswith((".yaml", ".yml", ".json", ".bru")):
                         locations = self.agent_detector.get_structured_agent_locations(content, path_lower)
                     else:
